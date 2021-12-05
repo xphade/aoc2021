@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+from aoc_utils import get_input_path
 from typing import Dict, List
 
 
@@ -77,7 +78,7 @@ def generate_vent_map(lines: List[Line]) -> Dict[Point, int]:
 
 
 if __name__ == "__main__":
-    data_path = "./data/05_lines-of-vents.txt"
+    data_path = get_input_path("Day 5: Hydrothermal Venture")
     with open(data_path, "r") as file:
         raw_lines = file.readlines()
 

@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+from aoc_utils import get_input_path
 from typing import Dict, List, Tuple
 
 
@@ -56,7 +57,7 @@ def calculate_bingo_scores(numbers: List[int], boards: List[BingoBoard]) -> List
 
 
 if __name__ == "__main__":
-    data_path = "./data/04_bingo.txt"
+    data_path = get_input_path("Day 4: Giant Squid")
     with open(data_path, "r") as file:
         blocks = file.read().split("\n\n")
 

@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+from aoc_utils import get_input_path
 from typing import List
 
 
@@ -22,7 +23,7 @@ def count_window_increases(measurements: List[int], window_size: int = 3) -> int
 
 
 if __name__ == "__main__":
-    data_path = "./data/01_measurements.txt"
+    data_path = get_input_path("Day 1: Sonar Sweep")
     with open(data_path, "r") as file:
         contents = file.readlines()
         measurements = [int(line) for line in contents]

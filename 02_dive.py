@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-
+from aoc_utils import get_input_path
 from typing import List, Tuple
 
 CMD_FORWARD = "forward"
@@ -52,7 +52,7 @@ def determine_location_aim(inputs: List[ControlInput]) -> Tuple[int, int]:
 
 
 if __name__ == "__main__":
-    data_path = "./data/02_submarine-inputs.txt"
+    data_path = get_input_path("Day 2: Dive!")
     with open(data_path, "r") as file:
         contents = file.readlines()
         control_inputs = [ControlInput(line) for line in contents]

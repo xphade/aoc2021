@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+from aoc_utils import get_input_path
 from typing import List, Tuple
 
 
@@ -60,7 +61,7 @@ def calculate_gamma_and_epsilon_rate(binary_numbers: List[str]) -> Tuple[int, in
 
 
 if __name__ == "__main__":
-    data_path = "./data/03_diagnostic-report.txt"
+    data_path = get_input_path("Day 3: Binary Diagnostic")
     with open(data_path, "r") as file:
         binary_numbers = file.read().splitlines()
 
