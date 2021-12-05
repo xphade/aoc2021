@@ -3,7 +3,7 @@
 from typing import List, Tuple
 
 
-def __calculate_most_common_bit(binary_numbers: List[str], pos: int) -> str:
+def calculate_most_common_bit(binary_numbers: List[str], pos: int) -> str:
     count = 0
     for number in binary_numbers:
         if number[pos] == "1":
@@ -13,8 +13,8 @@ def __calculate_most_common_bit(binary_numbers: List[str], pos: int) -> str:
     return "1" if (count >= number_count / 2) else "0"
 
 
-def __calculate_least_common_bit(binary_numbers: List[str], pos: int) -> str:
-    mcb = __calculate_most_common_bit(binary_numbers, pos)
+def calculate_least_common_bit(binary_numbers: List[str], pos: int) -> str:
+    mcb = calculate_most_common_bit(binary_numbers, pos)
     return "1" if mcb == "0" else "0"
 
 
@@ -23,7 +23,7 @@ def calculate_oxygen_generator_rating(binary_numbers: List[str]) -> int:
     idx = 0
 
     while len(filtered_list) > 1:
-        mcb = __calculate_most_common_bit(filtered_list, idx)
+        mcb = calculate_most_common_bit(filtered_list, idx)
         filtered_list = list(filter(lambda number: number[idx] == mcb, filtered_list))
         idx += 1
 
@@ -35,7 +35,7 @@ def calculate_co2_scrubber_rating(binary_numbers: List[str]) -> int:
     idx = 0
 
     while len(filtered_list) > 1:
-        lcb = __calculate_least_common_bit(filtered_list, idx)
+        lcb = calculate_least_common_bit(filtered_list, idx)
         filtered_list = list(filter(lambda number: number[idx] == lcb, filtered_list))
         idx += 1
 
