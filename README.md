@@ -9,6 +9,7 @@ written in Python.
 * To calculate a solution, run the respective file with its corresponding input
   * For example:  
     `$ python3 01_sonar-sweep.py data/01_measurements.txt`
-  * In unix environments, you can also execute the python file directly
+  * In unix environments, you can execute the python file directly
+* It is also possible to calculate all solutions using `scripts/run-all.sh`
 * The repository contains my specific inputs as well as the examples (see
   `data/test/`)
