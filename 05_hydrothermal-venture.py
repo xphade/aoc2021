@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
-from aoc_utils import get_input_path
+from aoc_utils import get_input_path, print_elapsed_time
+from timeit import default_timer as timer
 from typing import Dict, List
 
 
@@ -82,10 +83,18 @@ if __name__ == "__main__":
     with open(data_path, "r") as file:
         raw_lines = file.readlines()
 
-    for include_diagonals in [False, True]:
-        lines = extract_lines(raw_lines, include_diagonals)
-        vent_map = generate_vent_map(lines)
-        number_of_overlaps = sum([vents >= 2 for vents in vent_map.values()])
+    start = timer()
 
-        mode = "including diagonals" if include_diagonals else "horizontal/vertical"
-        print(f"Number of overlaps ({mode}): {number_of_overlaps}")
+    lines = extract_lines(raw_lines, include_diagonals=False)
+    vent_map = generate_vent_map(lines)
+    num_overlaps_hv = sum([vents >= 2 for vents in vent_map.values()])
+
+    lines = extract_lines(raw_lines, include_diagonals=True)
+    vent_map = generate_vent_map(lines)
+    num_overlaps_diag = sum([vents >= 2 for vents in vent_map.values()])
+
+    stop = timer()
+
+    print(f"Number of overlaps (horizontal/vertical): {num_overlaps_hv}")
+    print(f"Number of overlaps (including diagonals): {num_overlaps_diag}")
+    print_elapsed_time(start, stop)

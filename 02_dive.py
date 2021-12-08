@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
-from aoc_utils import get_input_path
+from aoc_utils import get_input_path, print_elapsed_time
+from timeit import default_timer as timer
 from typing import List, Tuple
 
 CMD_FORWARD = "forward"
@@ -57,10 +58,16 @@ if __name__ == "__main__":
         contents = file.readlines()
         control_inputs = [ControlInput(line) for line in contents]
 
-    location = determine_location(control_inputs)
-    product = location[0] * location[1]
-    print(f"Final location: {location}, h x d = {product}")
+    start = timer()
 
-    location = determine_location_aim(control_inputs)
-    product = location[0] * location[1]
-    print(f"True final location (aim-method): {location}, h x d = {product}")
+    location1 = determine_location(control_inputs)
+    product1 = location1[0] * location1[1]
+
+    location2 = determine_location_aim(control_inputs)
+    product2 = location2[0] * location2[1]
+
+    stop = timer()
+
+    print(f"Final location: {location1}, h x d = {product1}")
+    print(f"True final location (aim-method): {location2}, h x d = {product2}")
+    print_elapsed_time(start, stop)

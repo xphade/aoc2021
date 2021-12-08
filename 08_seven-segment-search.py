@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from aoc_utils import get_input_path
+from aoc_utils import get_input_path, print_elapsed_time
 from timeit import default_timer as timer
 from typing import Callable, Dict, List
 
@@ -108,4 +108,4 @@ if __name__ == "__main__":
 
     print(f"Appearances of digits 1, 4, 7 and 8: {len(filtered_digits)}")
     print(f"Sum of output values: {sum}")
-    print(f"Elapsed time: {1e3 * (stop - start):.2f} ms")
+    print_elapsed_time(start, stop)

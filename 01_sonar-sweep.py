@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
-from aoc_utils import get_input_path
+from aoc_utils import get_input_path, print_elapsed_time
+from timeit import default_timer as timer
 from typing import List
 
 
@@ -28,11 +29,14 @@ if __name__ == "__main__":
         contents = file.readlines()
         measurements = [int(line) for line in contents]
 
+    start = timer()
     num_increases = count_increases(measurements)
-    print(f"Number of increasing measurements: {num_increases}")
-
     num_window_increases = count_window_increases(measurements)
+    stop = timer()
+
+    print("Number of increasing measurements:", num_increases)
     print(
-        f"Number of increasing measurements (sliding-window approach): ",
+        "Number of increasing measurements (sliding-window approach):",
         num_window_increases,
     )
+    print_elapsed_time(start, stop)

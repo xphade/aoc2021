@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
-from aoc_utils import get_input_path
+from aoc_utils import get_input_path, print_elapsed_time
+from timeit import default_timer as timer
 from typing import List, Tuple
 
 
@@ -65,18 +66,24 @@ if __name__ == "__main__":
     with open(data_path, "r") as file:
         binary_numbers = file.read().splitlines()
 
+    start = timer()
+
     gamma, epsilon = calculate_gamma_and_epsilon_rate(binary_numbers)
     power_consumption = gamma * epsilon
-    print(
-        f"Power consumption: {power_consumption}"
-        f" (Gamma rate: {gamma}, Epsilon rate: {epsilon})"
-    )
 
     oxygen_gen_rating = calculate_oxygen_generator_rating(binary_numbers)
     co2_scrubber_rating = calculate_co2_scrubber_rating(binary_numbers)
     life_support_rating = oxygen_gen_rating * co2_scrubber_rating
+
+    stop = timer()
+
+    print(
+        f"Power consumption: {power_consumption}"
+        f" (Gamma rate: {gamma}, Epsilon rate: {epsilon})"
+    )
     print(
         f"Life support rating: {life_support_rating}"
         f" (Oxygen generator rating: {oxygen_gen_rating},"
         f" CO2 scrubber rating: {co2_scrubber_rating})"
     )
+    print_elapsed_time(start, stop)

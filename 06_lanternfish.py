@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
-from aoc_utils import get_input_path
+from aoc_utils import get_input_path, print_elapsed_time
+from timeit import default_timer as timer
 from typing import Dict, List
 
 REPRODUCTION_TIME: int = 6
@@ -38,7 +39,16 @@ if __name__ == "__main__":
     with open(data_path, "r") as file:
         initial_population = [*map(int, file.read().split(","))]
 
+    start = timer()
+
+    result: Dict[int, int] = {}
     for days in {80, 256}:
         population = set_up_population(initial_population)
         simulate(population, days)
-        print(f"Population after {days} days: {sum(population.values())}")
+        result[days] = sum(population.values())
+
+    stop = timer()
+
+    print(f"Population after 80 days: {result[80]}")
+    print(f"Population after 256 days: {result[256]}")
+    print_elapsed_time(start, stop)

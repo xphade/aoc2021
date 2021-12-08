@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
-from aoc_utils import get_input_path
+from aoc_utils import get_input_path, print_elapsed_time
+from timeit import default_timer as timer
 from typing import Callable, List, Optional, Tuple
 
 Position = int
@@ -39,7 +40,11 @@ if __name__ == "__main__":
     with open(data_path, "r") as file:
         crab_positions = [*map(Position, file.read().split(","))]
 
-    position, fuel = find_optimal_position(crab_positions, cost_part1)
-    print(f"Position and fuel consumption (1st part): {position}, {fuel}")
-    position, fuel = find_optimal_position(crab_positions, cost_part2)
-    print(f"Position and fuel consumption (2nd part): {position}, {fuel}")
+    start = timer()
+    position1, fuel1 = find_optimal_position(crab_positions, cost_part1)
+    position2, fuel2 = find_optimal_position(crab_positions, cost_part2)
+    stop = timer()
+
+    print(f"Position and fuel consumption (1st part): {position1}, {fuel1}")
+    print(f"Position and fuel consumption (2nd part): {position2}, {fuel2}")
+    print_elapsed_time(start, stop)

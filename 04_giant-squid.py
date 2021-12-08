@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
-from aoc_utils import get_input_path
+from aoc_utils import get_input_path, print_elapsed_time
+from timeit import default_timer as timer
 from typing import Dict, List, Tuple
 
 
@@ -61,6 +62,8 @@ if __name__ == "__main__":
     with open(data_path, "r") as file:
         blocks = file.read().split("\n\n")
 
+    start = timer()
+
     drawn_numbers = [int(number) for number in blocks[0].split(",")]
     boards: List[BingoBoard] = []
 
@@ -71,5 +74,9 @@ if __name__ == "__main__":
 
     scores = calculate_bingo_scores(drawn_numbers, boards)
     assert len(scores) >= 2
+
+    stop = timer()
+
     print(f"Score of first bingo: {scores[0]}")
     print(f"Score of final bingo: {scores[-1]}")
+    print_elapsed_time(start, stop)

@@ -12,3 +12,14 @@ def get_input_path(message: str) -> Path:
         parser.error("Input path must be a valid file")
 
     return path
+
+
+def print_elapsed_time(start: float, stop: float) -> None:
+    time_diff = stop - start
+    n = 1
+    while time_diff < 1 and n <= 3:
+        time_diff *= 1000
+        n += 1
+
+    units = {1: "s", 2: "ms", 3: "µs", 4: "ns"}
+    print(f"Elapsed time: {time_diff:.2f} {units[n]}")
