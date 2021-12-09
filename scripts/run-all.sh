@@ -3,8 +3,14 @@
 cd "$(dirname "$0")/.."
 echo
 
-for i in {1..8}; do
+for i in {1..25}; do
+    # Continue if file does not (yet) exist
+    file=(./*${i}_*.py)
+    if [[ ! -f ${file[0]} ]]; then
+        continue
+    fi
+
     echo "Day $i:"
-    eval "./0${i}_*.py data/0${i}_*.txt"
+    eval "./*${i}_*.py data/*${i}_*.txt"
     echo
 done
