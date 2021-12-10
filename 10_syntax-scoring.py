@@ -84,6 +84,6 @@ if __name__ == "__main__":
     syntax_error_score, middle_score = calculate_scores(chunks)
     stop = timer()
 
-    print(syntax_error_score)
-    print(middle_score)
+    print("Total syntax error score:", syntax_error_score)
+    print("Autocomplete middle score:", middle_score)
     print_elapsed_time(start, stop)
