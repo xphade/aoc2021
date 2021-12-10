@@ -18,71 +18,71 @@ class NoteEntry:
         assert len(self.signal_patterns) == 10 and len(self.output_value) == 4
 
 
-def sortedStr(s: str) -> str:
+def sorted_str(s: str) -> str:
     """Sort `s` alphabetically and return it"""
     return "".join(sorted(s))
 
 
-def findPattern(patterns: List[str], filter_func: Callable[[str], bool]) -> str:
+def find_pattern(patterns: List[str], filter_func: Callable[[str], bool]) -> str:
     """Find the pattern defined by `filter_func` in the list of `patterns`"""
-    findResult = [*filter(filter_func, patterns)]
-    assert len(findResult) == 1
-    return findResult[0]
+    find_result = [*filter(filter_func, patterns)]
+    assert len(find_result) == 1
+    return find_result[0]
 
 
-def containsPattern(input: str, pattern: str) -> bool:
+def contains_pattern(input: str, pattern: str) -> bool:
     """Check if the `input` contains all signals of the given `pattern`"""
     assert len(input) >= len(pattern)
     return all([p in input for p in pattern])
 
 
-def buildPatternMap(patterns: List[str]) -> PatternMap:
+def build_pattern_map(patterns: List[str]) -> PatternMap:
     """Build the dictionary mapping patterns to the respective digits"""
-    sortedPatterns = [*map(sortedStr, patterns)]
-    patternResults = [""] * 10
+    sorted_patterns = [*map(sorted_str, patterns)]
+    pattern_results = [""] * 10
 
     # Start with digits with a distinct length
-    patternResults[1] = findPattern(sortedPatterns, lambda s: len(s) == 2)
-    sortedPatterns.remove(patternResults[1])
+    pattern_results[1] = find_pattern(sorted_patterns, lambda s: len(s) == 2)
+    sorted_patterns.remove(pattern_results[1])
 
-    patternResults[4] = findPattern(sortedPatterns, lambda s: len(s) == 4)
-    sortedPatterns.remove(patternResults[4])
+    pattern_results[4] = find_pattern(sorted_patterns, lambda s: len(s) == 4)
+    sorted_patterns.remove(pattern_results[4])
 
-    patternResults[7] = findPattern(sortedPatterns, lambda s: len(s) == 3)
-    sortedPatterns.remove(patternResults[7])
+    pattern_results[7] = find_pattern(sorted_patterns, lambda s: len(s) == 3)
+    sorted_patterns.remove(pattern_results[7])
 
-    patternResults[8] = findPattern(sortedPatterns, lambda s: len(s) == 7)
-    sortedPatterns.remove(patternResults[8])
+    pattern_results[8] = find_pattern(sorted_patterns, lambda s: len(s) == 7)
+    sorted_patterns.remove(pattern_results[8])
 
     # Now deduce the rest of the digits from the already known patterns
-    patternResults[3] = findPattern(
-        sortedPatterns,
-        lambda s: containsPattern(s, patternResults[1]) and len(s) == 5,
+    pattern_results[3] = find_pattern(
+        sorted_patterns,
+        lambda s: contains_pattern(s, pattern_results[1]) and len(s) == 5,
     )
-    sortedPatterns.remove(patternResults[3])
+    sorted_patterns.remove(pattern_results[3])
 
-    patternResults[6] = findPattern(
-        sortedPatterns,
-        lambda s: not containsPattern(s, patternResults[1]) and len(s) == 6,
+    pattern_results[6] = find_pattern(
+        sorted_patterns,
+        lambda s: not contains_pattern(s, pattern_results[1]) and len(s) == 6,
     )
-    sortedPatterns.remove(patternResults[6])
+    sorted_patterns.remove(pattern_results[6])
 
-    patternResults[9] = findPattern(
-        sortedPatterns, lambda s: containsPattern(s, patternResults[3])
+    pattern_results[9] = find_pattern(
+        sorted_patterns, lambda s: contains_pattern(s, pattern_results[3])
     )
-    sortedPatterns.remove(patternResults[9])
+    sorted_patterns.remove(pattern_results[9])
 
-    patternResults[0] = findPattern(sortedPatterns, lambda s: len(s) == 6)
-    sortedPatterns.remove(patternResults[0])
+    pattern_results[0] = find_pattern(sorted_patterns, lambda s: len(s) == 6)
+    sorted_patterns.remove(pattern_results[0])
 
-    patternResults[5] = findPattern(
-        sortedPatterns, lambda s: containsPattern(patternResults[6], s)
+    pattern_results[5] = find_pattern(
+        sorted_patterns, lambda s: contains_pattern(pattern_results[6], s)
     )
-    sortedPatterns.remove(patternResults[5])
+    sorted_patterns.remove(pattern_results[5])
 
     # Digit 2 is the only one left
-    patternResults[2] = sortedPatterns.pop()
-    return {pattern: i for i, pattern in enumerate(patternResults)}
+    pattern_results[2] = sorted_patterns.pop()
+    return {pattern: i for i, pattern in enumerate(pattern_results)}
 
 
 if __name__ == "__main__":
@@ -100,8 +100,8 @@ if __name__ == "__main__":
     # Part 2: Decode the patterns and use them to calculate the sum of output values
     sum = 0
     for note in notes:
-        patternMap = buildPatternMap(note.signal_patterns)
-        digits = [patternMap[sortedStr(pattern)] for pattern in note.output_value]
+        pattern_map = build_pattern_map(note.signal_patterns)
+        digits = [pattern_map[sorted_str(pattern)] for pattern in note.output_value]
         sum += int("".join(map(str, digits)))
 
     stop = timer()
