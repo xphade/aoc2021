@@ -14,10 +14,10 @@ def inside_matrix(coordinate: Position) -> bool:
     return (r >= 0) and (r < MATRIX_SIZE) and (c >= 0) and (c < MATRIX_SIZE)
 
 
-def get_adjacent_positions(coordinate: Position) -> Iterator[Position]:
-    """Return adjacent points of the given `coordinate`"""
+def adjacent_coordinates(coordinate: Position) -> Iterator[Position]:
+    """Return coordinates of adjacent points of the given `coordinate`"""
     r, c = coordinate
-    adjacent_positions = [
+    adjacent_coordinates = [
         (r - 1, c - 1),
         (r - 1, c),
         (r - 1, c + 1),
@@ -27,7 +27,7 @@ def get_adjacent_positions(coordinate: Position) -> Iterator[Position]:
         (r + 1, c),
         (r + 1, c + 1),
     ]
-    return filter(inside_matrix, adjacent_positions)
+    return filter(inside_matrix, adjacent_coordinates)
 
 
 def traverse_matrix(size: int) -> Iterator[Position]:
@@ -51,11 +51,11 @@ def take_step(energy_levels: List[List[int]]) -> int:
     # Second part: Continuously update positions affected by flashes
     while len(flashes) > 0:
         flash_position = flashes.pop(0)
-        for position in get_adjacent_positions(flash_position):
-            r, c = position
+        for coordinate in adjacent_coordinates(flash_position):
+            r, c = coordinate
             energy_levels[r][c] += 1
             if energy_levels[r][c] == 10:
-                flashes.append((r, c))
+                flashes.append(coordinate)
 
     # Finally: Count the number of flashes and reset the respective positions
     number_of_flashes = 0
