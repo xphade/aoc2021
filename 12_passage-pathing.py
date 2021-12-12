@@ -7,8 +7,9 @@ from typing import Dict, Iterator, List, Optional, Set
 START = "start"
 END = "end"
 
-CaveMap = Dict[str, Set[str]]
-Path = List[str]
+Cave = str
+CaveMap = Dict[Cave, Set[Cave]]
+Path = List[Cave]
 
 
 def is_small_cave(name: str) -> bool:
@@ -16,20 +17,35 @@ def is_small_cave(name: str) -> bool:
     return name.islower()
 
 
-def get_small_caves(map: CaveMap) -> Iterator[str]:
+def get_small_caves(map: CaveMap) -> Iterator[Cave]:
     """Get all small caves of the `map` (besides start and end)"""
     return filter(lambda c: is_small_cave(c) and c != START and c != END, map)
 
 
 def explore(
     map: CaveMap,
-    visited: Set[str],
+    visited: Set[Cave],
     current_path: Path,
     successful_paths: List[Path],
-    double_access_cave: Optional[str] = None,
-    accessed_twice: bool = False,
+    double_visit_cave: Optional[Cave] = None,
+    visited_twice: bool = False,
 ) -> None:
-    """Explore every possible path of the `map` and find the successful ones"""
+    """Explore every possible path of the `map` and find the successful ones
+
+    Note that this method does not work if two big caves are directly connected to each
+    other. However, this is not the case for our inputs. If it was, we would  also need
+    to track which neighbors of each big cave we have visited.
+
+    Args:
+        map (CaveMap): The map of the cave, associating caves to their neighbors
+        visited (Set[str]): Set of visited caves (only small caves)
+        current_path (Path): The currently explored path
+        successful_paths (List[Path]): List of paths which lead to the end
+        double_visit_cave (Optional[str], optional): Optional small cave which can be
+            visited two times. Defaults to None.
+        visited_twice (bool, optional): Flag indicating that the cave has been visited
+            twice. Defaults to False.
+    """
     current_cave = current_path[-1]
 
     # Stopping condition
@@ -40,8 +56,8 @@ def explore(
     if is_small_cave(current_cave):
         # If double access for the current cave is allowed, skip adding the respective
         # cave to the `visited` set this one time
-        if double_access_cave == current_cave and not accessed_twice:
-            accessed_twice = True
+        if double_visit_cave == current_cave and not visited_twice:
+            visited_twice = True
         else:
             visited.add(current_cave)
 
@@ -54,8 +70,8 @@ def explore(
             visited.copy(),
             current_path + [neighbor],
             successful_paths,
-            double_access_cave,
-            accessed_twice,
+            double_visit_cave,
+            visited_twice,
         )
 
 
@@ -97,7 +113,7 @@ if __name__ == "__main__":
     for cave in get_small_caves(map):
         visited.clear()
         current_path = [START]
-        explore(map, visited, current_path, successful_paths, double_access_cave=cave)
+        explore(map, visited, current_path, successful_paths, double_visit_cave=cave)
 
     # It is necessary to remove some duplicated paths
     paths_with_double_access = len(set(tuple(path) for path in successful_paths))
